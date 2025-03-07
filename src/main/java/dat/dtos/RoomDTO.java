@@ -16,10 +16,12 @@ public class RoomDTO
     private String roomNumber;
     private double price;
 
+
     public RoomDTO(Room room)
     {
         this.id = room.getId();
         this.roomNumber = room.getRoomNumber();
         this.price = room.getPrice();
+
     }
 }

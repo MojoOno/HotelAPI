@@ -16,13 +16,10 @@ public interface ICrudDAO
 
     <T> void delete(T object);
 
+
     <T> void delete(Class<T> type, Long id);
 
-    <T> T addRoom(Class<T> type1, Class<T> type2);
 
-    <T> void removeRoom(Class<T> type1, Class<T> type2);
-
-    <T> List<T> getRooms(Class<T> type1);
 
 
 }

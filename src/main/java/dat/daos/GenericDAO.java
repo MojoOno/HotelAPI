@@ -146,22 +146,4 @@ public class GenericDAO implements ICrudDAO
             throw new DAOException(401, "Error deleting object. ", e);
         }
     }
-
-    @Override
-    public <T> T addRoom(Class<T> type1, Class<T> type2)
-    {
-     return null;
-    }
-
-    @Override
-    public <T> void removeRoom(Class<T> type1, Class<T> type2)
-    {
-
-    }
-
-    @Override
-    public <T> List<T> getRooms(Class<T> type1)
-    {
-        return List.of();
-    }
 }

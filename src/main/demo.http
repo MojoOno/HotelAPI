@@ -1,5 +1,27 @@
-### GET request to example server
-GET https://examples.http-client.intellij.net/get
-    ?generated-in=IntelliJ IDEA
+GET localhost:7070/api/hotel
 
 ###
+GET localhost:7070/api/hotel/2
+
+###
+POST http://localhost:7070/api/hotel
+Content-Type: application/json
+
+{
+  "id": 6,
+  "name": "Hotel California",
+  "address": "1234 California St",
+  "rooms": [
+    {
+      "id": 51,
+      "roomNumber": "601",
+      "price": 100.00
+    },
+    {
+      "id": 52,
+      "roomNumber": "602",
+      "price": 200
+    }
+  ]
+}
+

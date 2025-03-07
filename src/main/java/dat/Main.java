@@ -1,37 +1,31 @@
 package dat;
 
 import dat.config.HibernateConfig;
+import dat.controllers.HotelController;
+import dat.rest.ApplicationConfig;
 import io.javalin.Javalin;
 import jakarta.persistence.EntityManagerFactory;
+import dat.rest.Routes;
+import okhttp3.Route;
 
-public class Main
-{
+public class Main {
     final static EntityManagerFactory emf = HibernateConfig.getEntityManagerFactory();
+    final static HotelController controller = new HotelController(emf);
 
-    //final static SomeController cotrollerName = new SomeController(emf);
+    public static void main(String[] args) {
+        Routes.setController(controller);
 
-    public static void main(String[] args)
-    {
-//        Javalin.create(config ->{
-//            config.router.contextPath = "/api";
-//            config.router.apiBuilder(() ->{
-//                // path("hotel", () ->{
-//                //     get("/", controllerName::getAll);
-//                //     get("/{id}", controllerName::getById);
-//                //     post("/", controllerName::create);
-//                //     put("/{id}", controllerName::update);
-//                //     delete("/{id}", controllerName::delete);
-//                // });
-//
-//                // path("room", () ->{
-//                //     get("/", controllerName::getAll);
-//                //     get("/{id}", controllerName::getById);
-//                //     post("/", controllerName::create);
-//                //     put("/{id}", controllerName::update);
-//                //     delete("/{id}", controllerName::delete);
-//                // });
-//            });
-//        }).start(7779);
+
+
+
+        ApplicationConfig
+                .getInstance()
+                .initiateServer()
+                .setRoute(Routes.getRoutes())
+                .handleException()
+                .startServer(7070);
+
+
 
     }
 }
