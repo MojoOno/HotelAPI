@@ -18,6 +18,7 @@ import java.util.stream.Collectors;
 public class Hotel
 {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
     private String address;
@@ -30,7 +31,7 @@ public class Hotel
 
     public Hotel(HotelDTO hotelDTO)
     {
-        this.id = hotelDTO.getId();
+
         this.name = hotelDTO.getName();
         this.address = hotelDTO.getAddress();
         this.rooms = hotelDTO.getRooms().stream()

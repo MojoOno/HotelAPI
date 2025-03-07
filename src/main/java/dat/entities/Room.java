@@ -15,6 +15,7 @@ public class Room
 {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(name = "room_number")
     private String roomNumber;
@@ -27,7 +28,7 @@ public class Room
 
     public Room(RoomDTO roomDTO, Hotel hotel)
     {
-        this.id = roomDTO.getId();
+
         this.roomNumber = roomDTO.getRoomNumber();
         this.price = roomDTO.getPrice();
         this.hotel = hotel;

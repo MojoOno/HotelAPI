@@ -8,17 +8,17 @@ POST http://localhost:7070/api/hotel
 Content-Type: application/json
 
 {
-  "id": 6,
+
   "name": "Hotel California",
   "address": "1234 California St",
   "rooms": [
     {
-      "id": 51,
+
       "roomNumber": "601",
       "price": 100.00
     },
     {
-      "id": 52,
+
       "roomNumber": "602",
       "price": 200
     }

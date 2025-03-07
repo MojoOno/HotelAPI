@@ -12,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class HotelController implements IController
 {
@@ -27,7 +28,11 @@ public class HotelController implements IController
     {
         try
         {
-            ctx.json(genericDAO.findAll(Hotel.class));
+            List<Hotel> hotels = genericDAO.findAll(Hotel.class);
+            List<HotelDTO> hotelDTOs = hotels.stream()
+                    .map(HotelDTO::new)
+                    .collect(Collectors.toList());
+            ctx.json(hotelDTOs);
         }
         catch (Exception e)
         {
