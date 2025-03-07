@@ -1,0 +1,28 @@
+package dat.daos;
+
+import java.util.List;
+
+public interface ICrudDAO
+{
+    <T> T create(T object);
+    <T> List<T> create(List<T> objects);
+
+    <T> T update(T object);
+    <T> List<T> update(List<T> objects);
+
+    <T> T read(Class<T> type, Long id);
+
+    <T> List<T> findAll(Class<T> type);
+
+    <T> void delete(T object);
+
+    <T> void delete(Class<T> type, Long id);
+
+    <T> T addRoom(Class<T> type1, Class<T> type2);
+
+    <T> void removeRoom(Class<T> type1, Class<T> type2);
+
+    <T> List<T> getRooms(Class<T> type1);
+
+
+}

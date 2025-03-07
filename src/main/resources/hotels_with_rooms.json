@@ -1,0 +1,87 @@
+[
+  {
+    "id": 1,
+    "name": "Grand Palace Hotel",
+    "address": "123 Main Street, Cityville",
+    "rooms": [
+      { "id": 1, "roomNumber": "101", "price": 150.0 },
+      { "id": 2, "roomNumber": "102", "price": 180.0 },
+      { "id": 3, "roomNumber": "103", "price": 200.0 },
+      { "id": 4, "roomNumber": "104", "price": 220.0 },
+      { "id": 5, "roomNumber": "105", "price": 250.0 },
+      { "id": 6, "roomNumber": "106", "price": 275.0 },
+      { "id": 7, "roomNumber": "107", "price": 290.0 },
+      { "id": 8, "roomNumber": "108", "price": 310.0 },
+      { "id": 9, "roomNumber": "109", "price": 330.0 },
+      { "id": 10, "roomNumber": "110", "price": 350.0 }
+    ]
+  },
+  {
+    "id": 2,
+    "name": "Ocean View Resort",
+    "address": "456 Beach Avenue, Seaside",
+    "rooms": [
+      { "id": 11, "roomNumber": "201", "price": 160.0 },
+      { "id": 12, "roomNumber": "202", "price": 185.0 },
+      { "id": 13, "roomNumber": "203", "price": 210.0 },
+      { "id": 14, "roomNumber": "204", "price": 230.0 },
+      { "id": 15, "roomNumber": "205", "price": 255.0 },
+      { "id": 16, "roomNumber": "206", "price": 280.0 },
+      { "id": 17, "roomNumber": "207", "price": 295.0 },
+      { "id": 18, "roomNumber": "208", "price": 315.0 },
+      { "id": 19, "roomNumber": "209", "price": 335.0 },
+      { "id": 20, "roomNumber": "210", "price": 355.0 }
+    ]
+  },
+  {
+    "id": 3,
+    "name": "Mountain Lodge",
+    "address": "789 Summit Road, Highlands",
+    "rooms": [
+      { "id": 21, "roomNumber": "301", "price": 170.0 },
+      { "id": 22, "roomNumber": "302", "price": 190.0 },
+      { "id": 23, "roomNumber": "303", "price": 220.0 },
+      { "id": 24, "roomNumber": "304", "price": 240.0 },
+      { "id": 25, "roomNumber": "305", "price": 265.0 },
+      { "id": 26, "roomNumber": "306", "price": 285.0 },
+      { "id": 27, "roomNumber": "307", "price": 300.0 },
+      { "id": 28, "roomNumber": "308", "price": 320.0 },
+      { "id": 29, "roomNumber": "309", "price": 340.0 },
+      { "id": 30, "roomNumber": "310", "price": 360.0 }
+    ]
+  },
+  {
+    "id": 4,
+    "name": "Urban Suites",
+    "address": "101 Downtown Blvd, Metropolis",
+    "rooms": [
+      { "id": 31, "roomNumber": "401", "price": 180.0 },
+      { "id": 32, "roomNumber": "402", "price": 200.0 },
+      { "id": 33, "roomNumber": "403", "price": 230.0 },
+      { "id": 34, "roomNumber": "404", "price": 250.0 },
+      { "id": 35, "roomNumber": "405", "price": 275.0 },
+      { "id": 36, "roomNumber": "406", "price": 290.0 },
+      { "id": 37, "roomNumber": "407", "price": 310.0 },
+      { "id": 38, "roomNumber": "408", "price": 330.0 },
+      { "id": 39, "roomNumber": "409", "price": 350.0 },
+      { "id": 40, "roomNumber": "410", "price": 370.0 }
+    ]
+  },
+  {
+    "id": 5,
+    "name": "Lakeside Inn",
+    "address": "202 Lakefront Drive, Rivertown",
+    "rooms": [
+      { "id": 41, "roomNumber": "501", "price": 190.0 },
+      { "id": 42, "roomNumber": "502", "price": 210.0 },
+      { "id": 43, "roomNumber": "503", "price": 240.0 },
+      { "id": 44, "roomNumber": "504", "price": 260.0 },
+      { "id": 45, "roomNumber": "505", "price": 285.0 },
+      { "id": 46, "roomNumber": "506", "price": 300.0 },
+      { "id": 47, "roomNumber": "507", "price": 320.0 },
+      { "id": 48, "roomNumber": "508", "price": 340.0 },
+      { "id": 49, "roomNumber": "509", "price": 360.0 },
+      { "id": 50, "roomNumber": "510", "price": 380.0 }
+    ]
+  }
+]

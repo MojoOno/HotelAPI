@@ -1,0 +1,167 @@
+package dat.daos;
+
+import dat.entities.Hotel;
+import dat.exceptions.DAOException;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class GenericDAO implements ICrudDAO
+{
+    private static EntityManagerFactory emf;
+    private static GenericDAO instance;
+
+    private GenericDAO(EntityManagerFactory emf)
+    {
+        this.emf = emf;
+    }
+
+    public static GenericDAO getInstance(EntityManagerFactory emf)
+    {
+        if (instance == null)
+        {
+            instance = new GenericDAO(emf);
+        }
+        return instance;
+    }
+
+    public <T> T create(T object)
+    {
+        try (EntityManager em = emf.createEntityManager())
+        {
+            em.getTransaction().begin();
+            em.persist(object);
+            em.getTransaction().commit();
+            return object;
+        }
+        catch (Exception e)
+        {
+            throw new DAOException(401, "Error persisting object to db. ", e);
+        }
+    }
+
+    public <T> List<T> create(List<T> objects)
+    {
+        try (EntityManager em = emf.createEntityManager())
+        {
+            em.getTransaction().begin();
+            for (T object : objects)
+            {
+                em.persist(object);
+            }
+            em.getTransaction().commit();
+            return objects;
+        }
+        catch (Exception e)
+        {
+            throw new DAOException(401, "Error persisting object to db. ", e);
+        }
+    }
+
+    public <T> T read(Class<T> type, Long id)
+    {
+        try (EntityManager em = emf.createEntityManager())
+        {
+            return em.find(type, id);
+        }
+        catch (Exception e)
+        {
+            throw new DAOException(401, "Error reading object from db", e);
+        }
+    }
+
+    public <T> List<T> findAll(Class<T> type)
+    {
+        try (EntityManager em = emf.createEntityManager())
+        {
+            return em.createQuery("SELECT t FROM " + type.getSimpleName() + " t", type).getResultList();
+        }
+        catch (Exception e)
+        {
+            throw new DAOException(401, "Error reading objects from db", e);
+        }
+    }
+
+    public <T> T update(T object)
+    {
+        try (EntityManager em = emf.createEntityManager())
+        {
+            em.getTransaction().begin();
+            T updatedEntity = em.merge(object);
+            em.getTransaction().commit();
+            return updatedEntity;
+        }
+        catch (Exception e)
+        {
+            throw new DAOException(401, "Error updating object. ", e);
+        }
+    }
+
+    public <T> List<T> update(List<T> objects)
+    {
+        try (EntityManager em = emf.createEntityManager())
+        {
+            List<T> updatedObjects = new ArrayList<>();
+            em.getTransaction().begin();
+            for (T object : objects)
+            {
+                updatedObjects.add(em.merge(object));
+            }
+            em.getTransaction().commit();
+            return updatedObjects;
+        }
+        catch (Exception e)
+        {
+            throw new DAOException(401, "Error updating object. ", e);
+        }
+    }
+
+    public <T> void delete(T object)
+    {
+        try (EntityManager em = emf.createEntityManager())
+        {
+            em.getTransaction().begin();
+            em.remove(object);
+            em.getTransaction().commit();
+        }
+        catch (Exception e)
+        {
+            throw new DAOException(401, "Error deleting object. ", e);
+        }
+    }
+
+    public <T> void delete(Class<T> type, Long id)
+    {
+        try (EntityManager em = emf.createEntityManager())
+        {
+            em.getTransaction().begin();
+            T object = em.find(type, id);
+            em.remove(object);
+            em.getTransaction().commit();
+        }
+        catch (Exception e)
+        {
+            throw new DAOException(401, "Error deleting object. ", e);
+        }
+    }
+
+    @Override
+    public <T> T addRoom(Class<T> type1, Class<T> type2)
+    {
+     return null;
+    }
+
+    @Override
+    public <T> void removeRoom(Class<T> type1, Class<T> type2)
+    {
+
+    }
+
+    @Override
+    public <T> List<T> getRooms(Class<T> type1)
+    {
+        return List.of();
+    }
+}
