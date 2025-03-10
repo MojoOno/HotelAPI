@@ -34,7 +34,9 @@ public class ReadHotelsFromJson
                 {
                     room.setHotel(hotel);
                     genericDao.create(room);
+
                 }
+
             }
             emf.close();
 

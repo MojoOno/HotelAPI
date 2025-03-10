@@ -11,6 +11,7 @@ import jakarta.persistence.EntityManagerFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -58,25 +59,47 @@ public class HotelController implements IController
         }
     }
 
+//    public void createHotel(Context ctx) {
+//        try {
+//            logger.info("Received request to create hotel");
+//
+//            HotelDTO incomingHotel = ctx.bodyAsClass(HotelDTO.class);
+//            logger.info("Parsed HotelDTO: {}", incomingHotel);
+//
+//            Hotel hotel = new Hotel(incomingHotel);
+//            logger.info("Converted to Hotel entity: {}", hotel);
+//
+//            Hotel createdHotel = genericDAO.create(hotel);
+//            logger.info("Created Hotel entity: {}", createdHotel);
+//
+//            ctx.json(new HotelDTO(createdHotel));
+//            logger.info("Response sent with created HotelDTO");
+//        } catch (Exception e) {
+//            logger.error("Error creating hotel", e);
+//            ErrorMessage error = new ErrorMessage("Error creating hotel");
+//            ctx.status(400).json(error);
+//        }
+//    }
+
+
     public void createHotel(Context ctx) {
         try {
-            logger.info("Received request to create hotel");
+            HotelDTO hotelDTO = ctx.bodyAsClass(HotelDTO.class);
+            Hotel hotel = new Hotel(hotelDTO);
+            genericDAO.create(hotel);
 
-            HotelDTO incomingHotel = ctx.bodyAsClass(HotelDTO.class);
-            logger.info("Parsed HotelDTO: {}", incomingHotel);
+            for (RoomDTO roomDTO : hotelDTO.getRooms()) {
+                Room room = new Room(null, roomDTO.getRoomNumber(), roomDTO.getPrice(), hotel);
+                genericDAO.create(room);
+                roomDTO.setId(room.getId());
+                roomDTO.setHotelId(hotel.getId());
+            }
 
-            Hotel hotel = new Hotel(incomingHotel);
-            logger.info("Converted to Hotel entity: {}", hotel);
-
-            Hotel createdHotel = genericDAO.create(hotel);
-            logger.info("Created Hotel entity: {}", createdHotel);
-
-            ctx.json(new HotelDTO(createdHotel));
-            logger.info("Response sent with created HotelDTO");
+            hotelDTO.setId(hotel.getId());
+            ctx.json(hotelDTO);
         } catch (Exception e) {
-            logger.error("Error creating hotel", e);
-            ErrorMessage error = new ErrorMessage("Error creating hotel");
-            ctx.status(400).json(error);
+            ctx.status(400).json(Collections.singletonMap("message", "Error creating hotel"));
+            e.printStackTrace();
         }
     }
 
