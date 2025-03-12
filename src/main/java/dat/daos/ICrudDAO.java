@@ -14,7 +14,6 @@ public interface ICrudDAO
     <T> List<T> findAll(Class<T> type);
 
     <T> void delete(T object);
-
     <T> void delete(Class<T> type, Long id);
 
 
