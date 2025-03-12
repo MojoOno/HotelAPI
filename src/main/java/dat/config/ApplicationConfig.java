@@ -5,6 +5,8 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import io.javalin.Javalin;
 import io.javalin.apibuilder.EndpointGroup;
 import io.javalin.config.JavalinConfig;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import static io.javalin.apibuilder.ApiBuilder.path;
 
@@ -15,6 +17,7 @@ public class ApplicationConfig
     private static JavalinConfig javalinConfig;
     private static ObjectMapper objectMapper = new ObjectMapper();
 
+    private Logger logger = LoggerFactory.getLogger(ApplicationConfig.class);
     private ApplicationConfig()
     {
     }
@@ -49,6 +52,7 @@ public class ApplicationConfig
 
     public ApplicationConfig startServer(int port)
     {
+        logger.info("Starting server on port {}", port);
         app.start(port);
         return applicationConfig;
     }
