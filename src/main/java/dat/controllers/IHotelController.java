@@ -2,7 +2,7 @@ package dat.controllers;
 
 import io.javalin.http.Context;
 
-public interface IController
+public interface IHotelController
 {
     void getAllHotels(Context ctx);
 
@@ -13,10 +13,4 @@ public interface IController
     void updateHotel(Context ctx);
 
     void deleteHotel(Context ctx);
-
-    void addRoomToHotel(Context ctx);
-
-    void deleteRoom(Context ctx);
-
-    void getRoomsForHotel(Context ctx);
 }
