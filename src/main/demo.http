@@ -25,3 +25,42 @@ Content-Type: application/json
   ]
 }
 
+###
+PUT http://localhost:7070/api/hotel/6
+Content-Type: : application/json
+
+{
+
+  "name": "Hotel California",
+  "address": "1234 California St",
+  "rooms": [
+    {
+      "id": 51,
+      "hotelId": 6,
+      "roomNumber": "601",
+      "price": 150.00
+    },
+    {
+      "id": 52,
+      "hotelId": 6,
+      "roomNumber": "602",
+      "price": 500.00
+    }
+  ]
+}
+
+###
+DELETE http://localhost:7070/api/hotel/7
+
+###
+GET http://localhost:7070/api/hotel/1/rooms
+
+###
+POST http://localhost:7070/api/hotel/1/room
+Content-Type: application/json
+
+{
+  "roomNumber": "111",
+  "price": 200.00,
+  "hotelId": 1
+}
