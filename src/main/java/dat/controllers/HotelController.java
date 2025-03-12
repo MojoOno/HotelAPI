@@ -15,7 +15,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class HotelController implements IController
+public class HotelController implements IHotelController
 {
     private final GenericDAO genericDAO;
 
@@ -59,28 +59,6 @@ public class HotelController implements IController
         }
     }
 
-//    public void createHotel(Context ctx) {
-//        try {
-//            logger.info("Received request to create hotel");
-//
-//            HotelDTO incomingHotel = ctx.bodyAsClass(HotelDTO.class);
-//            logger.info("Parsed HotelDTO: {}", incomingHotel);
-//
-//            Hotel hotel = new Hotel(incomingHotel);
-//            logger.info("Converted to Hotel entity: {}", hotel);
-//
-//            Hotel createdHotel = genericDAO.create(hotel);
-//            logger.info("Created Hotel entity: {}", createdHotel);
-//
-//            ctx.json(new HotelDTO(createdHotel));
-//            logger.info("Response sent with created HotelDTO");
-//        } catch (Exception e) {
-//            logger.error("Error creating hotel", e);
-//            ErrorMessage error = new ErrorMessage("Error creating hotel");
-//            ctx.status(400).json(error);
-//        }
-//    }
-
 
     public void createHotel(Context ctx) {
         try {
@@ -103,117 +81,81 @@ public class HotelController implements IController
         }
     }
 
-    public void updateHotel(Context ctx)
-    {
-        try
-        {
-            int id = Integer.parseInt(ctx.pathParam("id"));
-            HotelDTO incomingHotel = ctx.bodyAsClass(HotelDTO.class);
-            Hotel hotel = new Hotel(incomingHotel);
-            hotel.setId((long) id);
-            Hotel updatedHotel = genericDAO.update(hotel);
-            HotelDTO returnedHotel = new HotelDTO(updatedHotel);
-            ctx.json(returnedHotel);
-        }
-        catch (Exception e)
-        {
+    public void updateHotel(Context ctx) {
+        try {
+            logger.info("Starting updateHotel method");
+            long id = Long.parseLong(ctx.pathParam("id"));
+            Hotel existingHotel = genericDAO.read(Hotel.class, id);
+            if (existingHotel == null) {
+                logger.error("Hotel with id {} not found", id);
+                ctx.status(404).json(new ErrorMessage("Hotel not found"));
+                return;
+            }
+
+            HotelDTO hotelDTO = ctx.bodyAsClass(HotelDTO.class);
+            logger.info("Parsed HotelDTO: {}", hotelDTO);
+
+            existingHotel.setName(hotelDTO.getName());
+            existingHotel.setAddress(hotelDTO.getAddress());
+            logger.info("Updated Hotel entity: {}", existingHotel);
+
+            genericDAO.update(existingHotel);
+            logger.info("Updated Hotel entity in database");
+
+            for (RoomDTO roomDTO : hotelDTO.getRooms()) {
+                Room room = genericDAO.read(Room.class, roomDTO.getId());
+                if (room == null) {
+                    room = new Room(null, roomDTO.getRoomNumber(), roomDTO.getPrice(), existingHotel);
+                    genericDAO.create(room);
+                    logger.info("Created new Room entity: {}", room);
+                } else {
+                    room.setRoomNumber(roomDTO.getRoomNumber());
+                    room.setPrice(roomDTO.getPrice());
+                    room.setHotel(existingHotel);
+                    genericDAO.update(room);
+                    logger.info("Updated Room entity: {}", room);
+                }
+            }
+
+            hotelDTO.setId(existingHotel.getId());
+            ctx.json(hotelDTO);
+            logger.info("Successfully updated hotel and rooms, returning response");
+        } catch (Exception e) {
+            logger.error("Error updating hotel", e);
             ErrorMessage error = new ErrorMessage("Error updating hotel");
             ctx.status(400).json(error);
         }
     }
 
-    public void deleteHotel(Context ctx)
-    {
-        try
-        {
+    public void deleteHotel(Context ctx) {
+        try {
+            logger.info("Starting deleteHotel method");
             long id = Long.parseLong(ctx.pathParam("id"));
-            genericDAO.delete(Hotel.class, id);
-            ctx.status(204);
-        }
-        catch (Exception e)
-        {
+            Hotel existingHotel = genericDAO.read(Hotel.class, id);
+            if (existingHotel == null) {
+                logger.error("Hotel with id {} not found", id);
+                ctx.status(404).json(new ErrorMessage("Hotel not found"));
+                return;
+            }
+
+            // Delete all rooms associated with the hotel
+            if (existingHotel.getRooms() != null)
+            {
+                for (Room room : existingHotel.getRooms())
+                {
+                    genericDAO.delete(room);
+                    logger.info("Deleted Room entity with id {}", room.getId());
+                }
+            }
+
+            // Delete the hotel
+            genericDAO.delete(existingHotel);
+            logger.info("Deleted Hotel entity with id {}", id);
+            ctx.status(204).json(Collections.singletonMap("message", "Successfully deleted Hotel"));
+        } catch (Exception e) {
+            logger.error("Error deleting hotel", e);
             ErrorMessage error = new ErrorMessage("Error deleting hotel");
             ctx.status(400).json(error);
-        }
-    }
-
-    public void addRoomToHotel(Context ctx) {
-        try {
-            long hotelId = Long.parseLong(ctx.pathParam("id"));
-            RoomDTO incomingRoomDTO = ctx.bodyAsClass(RoomDTO.class);
-
-            // Find the existing hotel
-            Hotel hotel = genericDAO.read(Hotel.class, hotelId);
-            if (hotel == null) {
-                ctx.status(404).json(new ErrorMessage("Hotel not found"));
-                return;
-            }
-
-            // Convert DTO to Room entity and set hotel reference
-            Room room = new Room(incomingRoomDTO, hotel);
-
-            // Save the room using the generic method
-            genericDAO.create(room);
-
-            // Optional: Update hotel's room list and merge
-            hotel.getRooms().add(room);
-            genericDAO.update(hotel);
-
-            ctx.status(201).json(new RoomDTO(room));
-        } catch (Exception e) {
-            ctx.status(400).json(new ErrorMessage("Error adding room to hotel"));
-        }
-    }
-
-
-    public void deleteRoom(Context ctx) {
-        try {
-            long hotelId = Long.parseLong(ctx.pathParam("id"));
-            long roomId = Long.parseLong(ctx.pathParam("id"));
-
-            // Find the hotel and room
-            Hotel hotel = genericDAO.read(Hotel.class, hotelId);
-            Room room = genericDAO.read(Room.class, roomId);
-
-            if (hotel == null) {
-                ctx.status(404).json(new ErrorMessage("Hotel not found"));
-                return;
-            }
-            if (room == null || !room.getHotel().getId().equals(hotelId)) {
-                ctx.status(404).json(new ErrorMessage("Room not found in this hotel"));
-                return;
-            }
-
-            // Remove the room from the hotel and delete
-            hotel.getRooms().remove(room);
-            genericDAO.update(hotel);
-            genericDAO.delete(Room.class, roomId);
-
-            ctx.status(204); // No content
-        } catch (Exception e) {
-            ctx.status(400).json(new ErrorMessage("Error deleting room"));
-        }
-    }
-
-
-    public void getRoomsForHotel(Context ctx) {
-        try {
-            long hotelId = Long.parseLong(ctx.pathParam("id"));
-
-            // Find the hotel
-            Hotel hotel = genericDAO.read(Hotel.class, hotelId);
-            if (hotel == null) {
-                ctx.status(404).json(new ErrorMessage("Hotel not found"));
-                return;
-            }
-
-            // Convert Rooms to DTOs and return
-            List<RoomDTO> roomDTOs = hotel.getRooms().stream()
-                    .map(RoomDTO::new)
-                    .toList();
-            ctx.json(roomDTOs);
-        } catch (Exception e) {
-            ctx.status(400).json(new ErrorMessage("Error fetching rooms for hotel"));
         }
     }
 
