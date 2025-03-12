@@ -20,6 +20,7 @@
         <hamcrest>3.0</hamcrest>
         <testcontainers.version>1.20.4</testcontainers.version>
         <logback-classic>1.5.16</logback-classic>
+        <jbcrypt.version>0.4</jbcrypt.version>
     </properties>
     <dependencies>
         <!--  DB    -->
@@ -44,13 +45,8 @@
 
         <dependency>
             <groupId>io.javalin</groupId>
-            <artifactId>javalin-bundle</artifactId>
+            <artifactId>javalin</artifactId>
             <version>6.4.0</version>
-        </dependency>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-simple</artifactId>
-            <version>2.0.16</version>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -122,7 +118,6 @@
         </dependency>
 
         <!--  Logging   -->
-
         <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
@@ -133,7 +128,6 @@
             <artifactId>slf4j-api</artifactId>
             <version>${org.slf4j}</version>
         </dependency>
-
 
         <!-- Jackson for JSON handling -->
         <dependency>
@@ -146,7 +140,11 @@
             <artifactId>jackson-datatype-jsr310</artifactId>
             <version>2.13.0</version> <!-- or the latest version -->
         </dependency>
-
+        <dependency>
+            <groupId>org.mindrot</groupId>
+            <artifactId>jbcrypt</artifactId>
+            <version>${jbcrypt.version}</version>
+        </dependency>
     </dependencies>
 
     <build>
