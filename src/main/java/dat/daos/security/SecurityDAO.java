@@ -44,7 +44,7 @@ public class SecurityDAO
             Set<Role> newRoleSet = new HashSet<>();
             if (user.getRoles().isEmpty())
             {
-                Role userRole = em.find(Role.class, "USER");
+                Role userRole = em.find(Role.class, "user".toUpperCase());
                 if (userRole == null)
                 {
                     throw new EntityNotFoundException("Role 'user' not found");

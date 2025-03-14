@@ -38,7 +38,7 @@ public class ReadHotelsFromJson
                 }
 
             }
-            emf.close();
+            //emf.close();
 
         }
         catch (Exception e)

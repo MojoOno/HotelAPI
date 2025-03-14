@@ -30,7 +30,7 @@ public class Main {
         }
 
         //------- Create a user in the database ------- //
-        ReadHotelsFromJson.main(args);
+        ReadHotelsFromJson.main(args);  //Out comment this if setting hibernate to UPDATE
 
 
         ApplicationConfig
