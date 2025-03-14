@@ -44,11 +44,10 @@ public class SecurityDAO
             Set<Role> newRoleSet = new HashSet<>();
             if (user.getRoles().isEmpty())
             {
-                Role userRole = em.find(Role.class, "user");
+                Role userRole = em.find(Role.class, "USER");
                 if (userRole == null)
                 {
-                    userRole = new Role("user");
-                    em.persist(userRole);
+                    throw new EntityNotFoundException("Role 'user' not found");
                 }
                 user.addRole(userRole);
             }
@@ -77,20 +76,23 @@ public class SecurityDAO
         }
     }
 
-    public Role createRole(Role role)
+    public void createRole(String roleName)
     {
         try (EntityManager em = emf.createEntityManager())
         {
-            em.getTransaction().begin();
-            em.persist(role);
-            em.getTransaction().commit();
-            return role;
-        }
-        catch (Exception e)
+            if (em.find(Role.class, roleName.toUpperCase()) == null)
+            {
+                em.getTransaction().begin();
+                Role newRole = new Role(roleName.toUpperCase());
+                em.persist(newRole);
+                em.getTransaction().commit();
+            }
+        } catch (Exception e)
         {
             throw new RuntimeException(e);
         }
     }
+
 
     public UserDTO getVerifiedUser(String username, String password) throws ValidationException
     {

@@ -73,7 +73,7 @@ POST http://localhost:7070/api/auth/register
 Content-Type: application/json
 
 {
-  "username": "user2",
+  "username": "FranckDux",
   "password": "Hej123"
 }
 

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import dat.controllers.HotelController;
 import dat.controllers.RoomController;
 import dat.controllers.security.SecurityController;
+import dat.enums.Roles;
 import io.javalin.apibuilder.EndpointGroup;
 import io.javalin.security.RouteRole;
 
@@ -61,7 +62,7 @@ public class Routes
             path("secured", () ->
             {
                 get("demo", ctx ->
-                        ctx.json(objectMapper.createObjectNode().put("demo", "Hello: ")), Role.USER);
+                        ctx.json(objectMapper.createObjectNode().put("demo", "Hello: ")), Roles.USER);
             });
         };
     }
@@ -80,7 +81,4 @@ public class Routes
     {
         Routes.securityController = securityController;
     }
-
-    public enum Role implements RouteRole
-    {ANYONE, USER, ADMIN}
 }
