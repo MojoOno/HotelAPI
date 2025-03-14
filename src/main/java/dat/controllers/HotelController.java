@@ -20,6 +20,7 @@ public class HotelController implements IHotelController
     private final GenericDAO genericDAO;
 
     private static Logger logger = LoggerFactory.getLogger(HotelController.class);
+
     public HotelController(EntityManagerFactory emf)
     {
         genericDAO = GenericDAO.getInstance(emf);

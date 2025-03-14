@@ -1,8 +1,11 @@
 package dat.rest;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import dat.controllers.HotelController;
 import dat.controllers.RoomController;
+import dat.controllers.security.SecurityController;
 import io.javalin.apibuilder.EndpointGroup;
+import io.javalin.security.RouteRole;
 
 import static io.javalin.apibuilder.ApiBuilder.*;
 
@@ -11,11 +14,15 @@ public class Routes
 {
     private static HotelController hotelController;
     private static RoomController roomController;
+    private static SecurityController securityController;
+    static ObjectMapper objectMapper = new ObjectMapper();
 
-    public Routes(HotelController hotelController, RoomController roomController)
+
+    public Routes(HotelController hotelController, RoomController roomController, SecurityController securityController)
     {
         Routes.hotelController = hotelController;
         Routes.roomController = roomController;
+        Routes.securityController = securityController;
     }
 
     public static EndpointGroup getRoutes()
@@ -45,6 +52,17 @@ public class Routes
             {
                 delete("/{id}", roomController::deleteRoom);
             });
+            path("auth", () ->
+            {
+                post("register", securityController.register());
+                post("login", securityController.login());
+            });
+
+            path("secured", () ->
+            {
+                get("demo", ctx ->
+                        ctx.json(objectMapper.createObjectNode().put("demo", "Hello: ")), Role.USER);
+            });
         };
     }
 
@@ -57,4 +75,12 @@ public class Routes
     {
         Routes.roomController = roomController;
     }
+
+    public static void setSecurityController(SecurityController securityController)
+    {
+        Routes.securityController = securityController;
+    }
+
+    public enum Role implements RouteRole
+    {ANYONE, USER, ADMIN}
 }

@@ -1,4 +1,4 @@
-package dat.security.entities;
+package dat.entities.security;
 
 import java.util.Set;
 

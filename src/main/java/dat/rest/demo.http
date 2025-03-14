@@ -50,7 +50,7 @@ Content-Type: : application/json
 }
 
 ###
-DELETE http://localhost:7070/api/hotel/7
+DELETE http://localhost:7070/api/hotel/5
 
 ###
 GET http://localhost:7070/api/hotel/1/rooms
@@ -64,3 +64,29 @@ Content-Type: application/json
   "price": 200.00,
   "hotelId": 1
 }
+
+
+
+
+###
+POST http://localhost:7070/api/auth/register
+Content-Type: application/json
+
+{
+  "username": "user2",
+  "password": "Hej123"
+}
+
+###
+POST http://localhost:7070/api/auth/login
+Content-Type: application/json
+
+{
+  "username": "user2",
+  "password": "Hej123"
+}
+
+###
+GET http://localhost:7070/api/secured/demo
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJcIkZyZWRlcmlrIEZyYW5ja1wiIiwic3ViIjoidXNlcjIiLCJleHAiOjE3NDE5NDc3NjAsInJvbGVzIjoidXNlciIsInVzZXJuYW1lIjoidXNlcjIifQ.iRBorduS5IYZNZ-W-vNdrw_aaAE7FmqY1omesK9CHOE
+
