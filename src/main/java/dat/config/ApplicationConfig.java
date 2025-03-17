@@ -57,7 +57,7 @@ public class ApplicationConfig
 
     public ApplicationConfig startServer(int port)
     {
-        logger.info("Starting server on port {}", port);
+        logger.warn("Starting server on port {}", port);
         app.start(port);
         return applicationConfig;
     }

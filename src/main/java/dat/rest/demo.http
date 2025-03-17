@@ -82,11 +82,11 @@ POST http://localhost:7070/api/auth/login
 Content-Type: application/json
 
 {
-  "username": "user2",
+  "username": "FranckDux",
   "password": "Hej123"
 }
 
 ###
 GET http://localhost:7070/api/secured/demo
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJcIkZyZWRlcmlrIEZyYW5ja1wiIiwic3ViIjoidXNlcjIiLCJleHAiOjE3NDE5NDc3NjAsInJvbGVzIjoidXNlciIsInVzZXJuYW1lIjoidXNlcjIifQ.iRBorduS5IYZNZ-W-vNdrw_aaAE7FmqY1omesK9CHOE
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJcIkZyZWRlcmlrIEZyYW5ja1wiIiwic3ViIjoiRnJhbmNrRHV4IiwiZXhwIjoxNzQyMjAxNzM1LCJyb2xlcyI6IlVTRVIiLCJ1c2VybmFtZSI6IkZyYW5ja0R1eCJ9.TM0l6VLDBEFHqtgL8M3qXoehdRuyIFEHQrmX0rjW-go
 
