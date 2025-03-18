@@ -61,8 +61,8 @@ public class Routes
 
             path("secured", () ->
             {
-                get("demo", ctx ->
-                        ctx.json(objectMapper.createObjectNode().put("demo", "Hello: ")), Roles.USER);
+//                get("demo", ctx ->
+//                        ctx.json(objectMapper.createObjectNode().put("demo", "Hello: "))); //add the following Roles.USER
             });
         };
     }

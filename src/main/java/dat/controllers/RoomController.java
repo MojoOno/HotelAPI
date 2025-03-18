@@ -59,20 +59,29 @@ public class RoomController implements IRoomController
 
     public void deleteRoom(Context ctx) {
         try {
+            logger.info("Starting deleteRoom method");
 
             long roomId = Long.parseLong(ctx.pathParam("id"));
+            logger.info("Room ID: {}", roomId);
 
             // Find the hotel and room
             Room room = genericDAO.read(Room.class, roomId);
+            if (room == null) {
+                logger.error("Room with id {} not found", roomId);
+                ctx.status(404).json(new ErrorMessage("Room not found"));
+                return;
+            }
             long hotelId = room.getHotel().getId();
+            logger.info("Hotel ID: {}", hotelId);
             Hotel hotel = genericDAO.read(Hotel.class, hotelId);
 
-
             if (hotel == null) {
+                logger.error("Hotel with id {} not found", hotelId);
                 ctx.status(404).json(new ErrorMessage("Hotel not found"));
                 return;
             }
-            if (room == null || !room.getHotel().getId().equals(hotelId)) {
+            if (!room.getHotel().getId().equals(hotelId)) {
+                logger.error("Room with id {} not found in hotel with id {}", roomId, hotelId);
                 ctx.status(404).json(new ErrorMessage("Room not found in this hotel"));
                 return;
             }
@@ -81,9 +90,11 @@ public class RoomController implements IRoomController
             hotel.getRooms().remove(room);
             genericDAO.update(hotel);
             genericDAO.delete(Room.class, roomId);
+            logger.info("Deleted room with id {} from hotel with id {}", roomId, hotelId);
 
             ctx.status(204); // No content
         } catch (Exception e) {
+            logger.error("Error deleting room", e);
             ctx.status(400).json(new ErrorMessage("Error deleting room"));
         }
     }

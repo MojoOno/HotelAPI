@@ -36,6 +36,7 @@ public class HibernateConfig
     public static EntityManagerFactory getEntityManagerFactoryForTest() {
         if (emfTest == null){
             setTest(true);
+            System.out.println("Initializing Hibernate - getEntityManagerFactoryForTest()");
             emfTest = createEMF(getTest());  // No DB needed for test
         }
         return emfTest;
