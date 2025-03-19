@@ -63,16 +63,16 @@ class APIRessourceHotelControllerTest
         }
     }
 
-    @AfterAll
-    static void tearDownAll()
-    {
-        if (emf != null && emf.isOpen())
-        {
-            emf.close();
-            System.out.println("EntityManagerFactory closed");
-        }
-        ApplicationConfig.getInstance().stopServer();
-    }
+//    @AfterAll
+//    static void tearDownAll()
+//    {
+//        if (emf != null && emf.isOpen())
+//        {
+//            emf.close();
+//            System.out.println("EntityManagerFactory closed");
+//        }
+//        ApplicationConfig.getInstance().stopServer();
+//    }
 
 
     @Test

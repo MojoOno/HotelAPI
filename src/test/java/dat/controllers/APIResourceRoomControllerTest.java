@@ -80,16 +80,16 @@ class APIResourceRoomControllerTest
         }
     }
 
-    @AfterAll
-    static void tearDown()
-    {
-        if (emf != null && emf.isOpen())
-        {
-            emf.close();
-            System.out.println("EntityManagerFactory closed");
-        }
-        ApplicationConfig.getInstance().stopServer();
-    }
+//    @AfterAll
+//    static void tearDown()
+//    {
+//        if (emf != null && emf.isOpen())
+//        {
+//            emf.close();
+//            System.out.println("EntityManagerFactory closed");
+//        }
+//        ApplicationConfig.getInstance().stopServer();
+//    }
 
     @Test
     @DisplayName("Test adding room to hotel")
