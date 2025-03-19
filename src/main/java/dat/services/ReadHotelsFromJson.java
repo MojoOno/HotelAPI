@@ -11,7 +11,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 public class ReadHotelsFromJson
@@ -20,6 +24,13 @@ public class ReadHotelsFromJson
     {
         try (FileReader fileReader = new FileReader("src/main/resources/hotels_with_rooms.json"))
         {
+            try(Reader reader = new InputStreamReader(
+                    ReadHotelsFromJson.class.getClassLoader().getResourceAsStream("hotels_with_rooms.json"),
+                    StandardCharsets.UTF_8)) {
+                if (reader == null) {
+                    throw new FileNotFoundException("Resource not found: hotels_with_rooms.json");
+                }
+            }
             // Read poems from json file
             ObjectMapper objectMapper = new ObjectMapper();
             HotelJsonWrapper hotelJsonWrapper = objectMapper.readValue(fileReader, HotelJsonWrapper.class);
