@@ -14,7 +14,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.jupiter.api.Assertions.*;
 
-@Disabled
+
 class APIRessourceHotelControllerTest
 {
     private static EntityManagerFactory emf = HibernateConfig.getEntityManagerFactoryForTest();

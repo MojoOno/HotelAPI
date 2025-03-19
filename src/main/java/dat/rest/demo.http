@@ -68,6 +68,8 @@ Content-Type: application/json
 
 
 
+
+
 ###
 POST http://localhost:7070/api/auth/register
 Content-Type: application/json
