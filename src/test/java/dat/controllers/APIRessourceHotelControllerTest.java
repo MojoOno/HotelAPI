@@ -33,7 +33,7 @@ class APIRessourceHotelControllerTest
                 .initiateServer()
                 .setRoute(Routes.getRoutes())
                 .handleException()
-                .startServer(7777);
+                .startServer(7778);
 
         RestAssured.baseURI = "http://localhost:7777/api";
     }
