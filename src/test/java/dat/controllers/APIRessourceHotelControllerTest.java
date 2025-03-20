@@ -35,7 +35,7 @@ class APIRessourceHotelControllerTest
                 .handleException()
                 .startServer(7778);
 
-        RestAssured.baseURI = "http://localhost:7777/api";
+        RestAssured.baseURI = "http://localhost:7778/api";
     }
 
     @BeforeEach
